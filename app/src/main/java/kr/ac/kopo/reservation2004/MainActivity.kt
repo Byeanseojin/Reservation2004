@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.Chronometer
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.RadioGroup.OnCheckedChangeListener
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnStart : Button
     lateinit var btnDone : Button
     lateinit var rg : RadioGroup
-    lateinit var calender :CalendarView
+    lateinit var calender :DatePicker
     lateinit var timePick :TimePicker
     lateinit var textResult : TextView
     var selectedYear : Int = 0
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         btnStart = findViewById<Button>(R.id.btnStart)
         btnDone = findViewById<Button>(R.id.btnDone)
         rg =findViewById<RadioGroup>(R.id.rg)
-        calender = findViewById<CalendarView>(R.id.calender)
+        calender = findViewById<DatePicker>(R.id.calender)
         timePick = findViewById<TimePicker>(R.id.timePick)
         textResult = findViewById<TextView>(R.id.textResult)
 
@@ -52,15 +53,19 @@ class MainActivity : AppCompatActivity() {
         btnDone.setOnClickListener {
             chrono.stop()
             chrono.setTextColor(Color.CYAN)
+            selectedYear = calender.year
+            selectedMonth = calender.month
+            selectedDay = calender.dayOfMonth
+
             textResult.setText("" + selectedYear + "년" +selectedMonth  +"월" +selectedDay +"일")
             textResult.append(""+timePick.currentHour +"시")
             textResult.append(""+timePick.currentMinute +"분")
         }
-        calender.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            selectedYear = year
-            selectedMonth = month + 1
-            selectedDay = dayOfMonth
-        }
+//        calender.setOnClickListener { view, year, month, dayOfMonth ->
+//            selectedYear = year
+//            selectedMonth = month + 1
+//            selectedDay = dayOfMonth
+//        }
     }
     var rgListener = OnCheckedChangeListener{group, checkedId ->
        calender.visibility = View.INVISIBLE
