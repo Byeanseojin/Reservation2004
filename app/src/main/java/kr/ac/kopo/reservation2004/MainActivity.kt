@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
         calender.setOnDateChangeListener { view, year, month, dayOfMonth ->
             selectedYear = year
-            selectedMonth = month
+            selectedMonth = month + 1
             selectedDay = dayOfMonth
         }
     }
