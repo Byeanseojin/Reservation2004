@@ -18,8 +18,8 @@ import android.widget.TimePicker
 
 class MainActivity : AppCompatActivity() {
     lateinit var chrono :Chronometer
-    lateinit var btnStart : Button
-    lateinit var btnDone : Button
+//    lateinit var btnStart : Button
+//    lateinit var btnDone : Button
     lateinit var rg : RadioGroup
     lateinit var calender :DatePicker
     lateinit var timePick :TimePicker
@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         chrono = findViewById<Chronometer>(R.id.chrono)
-        btnStart = findViewById<Button>(R.id.btnStart)
-        btnDone = findViewById<Button>(R.id.btnDone)
+//        btnStart = findViewById<Button>(R.id.btnStart)
+//        btnDone = findViewById<Button>(R.id.btnDone)
         rg =findViewById<RadioGroup>(R.id.rg)
         calender = findViewById<DatePicker>(R.id.calender)
         timePick = findViewById<TimePicker>(R.id.timePick)
@@ -43,23 +43,33 @@ class MainActivity : AppCompatActivity() {
 
         calender.visibility = View.INVISIBLE
         timePick.visibility = View.INVISIBLE
+        rg.visibility = View.INVISIBLE
+
 
         rg.setOnCheckedChangeListener(rgListener)
-        btnStart.setOnClickListener {
+        chrono.setOnClickListener {
             chrono.base = SystemClock.elapsedRealtime()
             chrono.start()
             chrono.setTextColor(Color.MAGENTA)
+            rg.visibility = View.VISIBLE
         }
-        btnDone.setOnClickListener {
+        textResult.setOnLongClickListener  {
             chrono.stop()
             chrono.setTextColor(Color.CYAN)
             selectedYear = calender.year
             selectedMonth = calender.month
             selectedDay = calender.dayOfMonth
 
-            textResult.setText("" + selectedYear + "년" +selectedMonth  +"월" +selectedDay +"일")
+            textResult.setText("" + selectedYear + "년" +(selectedMonth +1) +"월" +selectedDay +"일")
             textResult.append(""+timePick.currentHour +"시")
             textResult.append(""+timePick.currentMinute +"분")
+            textResult.append("예약 완료됨.")
+
+            rg.visibility = View.INVISIBLE
+            calender.visibility = View.INVISIBLE
+            timePick.visibility = View.INVISIBLE
+
+            return@setOnLongClickListener true
         }
 //        calender.setOnClickListener { view, year, month, dayOfMonth ->
 //            selectedYear = year
